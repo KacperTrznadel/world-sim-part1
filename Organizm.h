@@ -7,7 +7,7 @@ using namespace std;
 class Swiat;
 
 class Organizm {
-    protected:
+    private:
         int sila;
         int inicjatywa;
         int x, y;
@@ -22,7 +22,10 @@ class Organizm {
         
         virtual void akcja() = 0;
         virtual void kolizja(Organizm* inny) = 0;
+        virtual bool czyOdbilAtak(Organizm* atakujacy) { return false; }
         virtual char rysowanie() const = 0;
+        virtual Organizm* klonuj(int x, int y) const = 0;
+
 
         int getSila() const;
         int getInicjatywa() const;

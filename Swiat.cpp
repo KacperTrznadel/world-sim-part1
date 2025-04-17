@@ -10,21 +10,21 @@ Swiat::~Swiat() {
         delete org;
     }
 }
-Swiat::dodajOrganizm(Organizm* nowy) {
+void Swiat::dodajOrganizm(Organizm* nowy) {
     if (nowy->getX() >= 0 && nowy->getX() < szerokoscPlanszy && nowy->getY() >= 0 && nowy->getY() < wysokoscPlanszy) {
         organizmy.push_back(nowy);
     } else {
         delete nowy;
     }
 }
-Swiat::wykonajWszystkieAkcje() {
+void Swiat::wykonajWszystkieAkcje() {
     for (int i = 0; i < organizmy.size(); i++) {
         if (organizmy[i]->czyZywy()) {
             organizmy[i]->akcja();
         }
     }
 }
-Swiat::sprawdzWszystkieKolizje() {
+void Swiat::sprawdzWszystkieKolizje() {
     for (int i = 0; i < organizmy.size(); i++) {
         for (int j = i + 1; j < organizmy.size(); j++) {
             if (organizmy[i]->getX() == organizmy[j]->getX() && organizmy[i]->getY() == organizmy[j]->getY()) {
@@ -33,7 +33,7 @@ Swiat::sprawdzWszystkieKolizje() {
         }
     }
 }
-Swiat::usunWszystkieMartwe() {
+void Swiat::usunWszystkieMartwe() {
     for (int i = 0; i < organizmy.size(); i++) {
         if (!organizmy[i]->czyZywy()) {
             delete organizmy[i];
@@ -42,12 +42,35 @@ Swiat::usunWszystkieMartwe() {
         }
     }
 }
-Swiat::wykonajTure() {
-    wykonajAkcje();
-    sprawdzKolizje();
-    usunMartwe();
+void Swiat::sortujOrganizmy() {
+    int n = organizmy.size();
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            Organizm* a = organizmy[j];
+            Organizm* b = organizmy[j + 1];
+
+            bool zamien = false;
+            if (a->getInicjatywa() < b->getInicjatywa()) {
+                zamien = true;
+            } else if (a->getInicjatywa() == b->getInicjatywa() && a->getWiek() < b->getWiek()) {
+                zamien = true;
+            }
+
+            if (zamien) {
+                Organizm* temp = organizmy[j];
+                organizmy[j] = organizmy[j + 1];
+                organizmy[j + 1] = temp;
+            }
+        }
+    }
 }
-Swiat::rysujSwiat() const {
+void Swiat::wykonajTure() {
+    sortujOrganizmy();
+    wykonajWszystkieAkcje();
+    sprawdzWszystkieKolizje();
+    usunWszystkieMartwe();
+}
+void Swiat::rysujSwiat() const {
 
     // Inicjalizacja ncurses
     initscr();
@@ -73,7 +96,7 @@ Swiat::rysujSwiat() const {
     // Odświeżenie ekranu ze zmianami - gotowe na pierwszą turę
     refresh();
 }
-Swiat::getOrganizmNaPolu(int x, int y) const {
+Organizm* Swiat::getOrganizmNaPolu(int x, int y) const {
     for (Organizm* org : organizmy) {
         if (org->getX() == x && org->getY() == y) {
             return org;
@@ -81,9 +104,9 @@ Swiat::getOrganizmNaPolu(int x, int y) const {
     }
     return nullptr;
 }
-Swiat::getSzerokosc() const {
+int Swiat::getSzerokosc() const {
     return szerokoscPlanszy;
 }
-Swiat::getWysokosc() const {
+int Swiat::getWysokosc() const {
     return wysokoscPlanszy;
 }

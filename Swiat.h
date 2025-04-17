@@ -15,6 +15,7 @@ class Swiat {
         void wykonajWszystkieAkcje();
         void sprawdzWszystkieKolizje();
         void usunWszystkieMartwe();
+        void sortujOrganizmy();
 
     public:
 
