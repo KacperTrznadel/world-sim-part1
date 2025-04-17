@@ -14,8 +14,6 @@ class Zwierze: public Organizm {
     virtual void akcja() override;
     virtual void kolizja(Organizm* inny) override;
 
-    virtual char rysowanie() const = 0;
-
 };
 
 #endif
