@@ -12,7 +12,7 @@ class Zwierze: public Organizm {
     virtual ~Zwierze() {}
 
     virtual void akcja() override;
-    virtual void kolizja(Organizm* inny) override;
+    virtual void kolizja(Organizm* inny, int oldX, int oldY) override;
 
 };
 

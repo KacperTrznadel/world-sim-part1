@@ -22,12 +22,14 @@ void Zwierze::akcja() {
         if (cel == nullptr) {
             setPozycja(newX, newY);
         } else {
-            kolizja(cel);
+            int oldX = x;
+            int oldY = y;
+            kolizja(cel, oldX, oldY);
         }
     }
 }
 
-void Zwierze::kolizja(Organizm* inny) {
+void Zwierze::kolizja(Organizm* inny, int oldX, int oldY) {
     if (typeid(*this) == typeid(*inny)) {
 
         int dx[] = { 0, 1, 0, -1 };
@@ -50,7 +52,7 @@ void Zwierze::kolizja(Organizm* inny) {
 
     // Próba ataku
     if (inny->czyOdbilAtak(this)) {
-        // Atak został odparty - TODO
+        setPozycja(oldX, oldY);
         return;
     }
 
