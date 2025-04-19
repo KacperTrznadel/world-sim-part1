@@ -12,7 +12,7 @@ Swiat::~Swiat() {
 }
 void Swiat::dodajOrganizm(Organizm* nowy) {
     if (nowy->getX() >= 0 && nowy->getX() < szerokoscPlanszy && nowy->getY() >= 0 && nowy->getY() < wysokoscPlanszy) {
-        organizmy.push_back(nowy);
+        noweOrganizmy.push_back(nowy);
     } else {
         delete nowy;
     }
@@ -69,6 +69,13 @@ void Swiat::wykonajTure() {
     wykonajWszystkieAkcje();
     sprawdzWszystkieKolizje();
     usunWszystkieMartwe();
+
+    for (Organizm* org : noweOrganizmy) {
+        organizmy.push_back(org);
+    }
+    noweOrganizmy.clear();
+    sortujOrganizmy();
+
 }
 void Swiat::rysujSwiat() const {
 

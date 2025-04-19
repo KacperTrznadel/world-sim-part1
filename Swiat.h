@@ -12,6 +12,7 @@ class Swiat {
         int szerokoscPlanszy;
         int wysokoscPlanszy;
         vector<Organizm*> organizmy;
+        vector<Organizm*> noweOrganizmy;
         void wykonajWszystkieAkcje();
         void sprawdzWszystkieKolizje();
         void usunWszystkieMartwe();
