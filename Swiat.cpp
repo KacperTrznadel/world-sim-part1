@@ -1,14 +1,73 @@
 #include <iostream>
 #include <ncurses.h>
 #include <vector>
+#include <fstream>
 #include "Swiat.h"
 using namespace std;
 
-Swiat::Swiat(int newX, int newY): szerokoscPlanszy(newX), wysokoscPlanszy(newY) {}
+Swiat::Swiat(int newX, int newY): szerokoscPlanszy(newX), wysokoscPlanszy(newY), gameWin(nullptr), logWin(nullptr) {}
 Swiat::~Swiat() {
     for (Organizm* org : organizmy) {
         delete org;
     }
+    zakonczOkna();
+}
+void Swiat::inicjalizujOkna() {
+    initscr();
+    noecho();
+    cbreak();
+    keypad(stdscr, TRUE);
+
+    int heightTerminal, widthTerminal;
+    getmaxyx(stdscr, heightTerminal, widthTerminal);
+
+    int logHeight = 10;
+    int logWidth = widthTerminal - 10;
+    int logStartY = wysokoscPlanszy + 5;
+
+    gameWin = newwin(wysokoscPlanszy + 2, szerokoscPlanszy + 2, 0, 0);
+    logWin = newwin(logHeight, logWidth, logStartY, 0);
+
+    keypad(gameWin, TRUE);
+    keypad(logWin, TRUE);
+
+    scrollok(logWin, TRUE);
+    box(gameWin, 0, 0);     // Rysuj ramkę w oknie gry
+    wrefresh(gameWin);
+    wrefresh(logWin);
+}
+
+void Swiat::zakonczOkna() {
+    if (gameWin) delwin(gameWin);
+    if (logWin) delwin(logWin);
+    endwin();
+}
+void Swiat::rysujSwiat() const {
+    werase(gameWin);
+    box(gameWin, 0, 0);
+
+    for (Organizm* org : organizmy) {
+        mvwaddch(gameWin, org->getY() + 1, org->getX() + 1, org->rysowanie());
+    }
+
+    wrefresh(gameWin);
+}
+void Swiat::dodajLog(string tekst) {
+    logi.push_back(tekst);
+}
+void Swiat::wypiszLogi(int offset) const {
+    werase(logWin);
+    box(logWin, 0, 0);
+
+    int maxLines = getmaxy(logWin) - 2;
+    int start = max(0, (int)logi.size() - maxLines - offset);
+    int end = min((int)logi.size(), start + maxLines);
+
+    for (int i = start; i < end; ++i) {
+        mvwprintw(logWin, i - start + 1, 1, "[LOG]%s", logi[i].c_str());
+    }
+
+    wrefresh(logWin); // Odśwież okno logów
 }
 void Swiat::dodajOrganizm(Organizm* nowy) {
     if (nowy->getX() >= 0 && nowy->getX() < szerokoscPlanszy && nowy->getY() >= 0 && nowy->getY() < wysokoscPlanszy) {
@@ -66,32 +125,6 @@ void Swiat::wykonajTure() {
     noweOrganizmy.clear();
     sortujOrganizmy();
 
-}
-void Swiat::rysujSwiat() const {
-
-    // Inicjalizacja ncurses
-    initscr();
-    noecho();
-    cbreak();
-    start_color();
-    init_pair(1, COLOR_RED, COLOR_BLACK);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-
-    // Ustawienie koloru tła
-    for (int i = 0; i < szerokoscPlanszy; i++) {
-        for (int j = 0; j < wysokoscPlanszy; j++) {
-            mvaddch(j, i, ' ');
-        }
-    }
-
-    // Rysowanie organizmów
-    for (Organizm* org : organizmy) {
-        mvaddch(org->getY(), org->getX(), org->rysowanie());
-    }
-
-    // Odświeżenie ekranu ze zmianami - gotowe na pierwszą turę
-    refresh();
 }
 Organizm* Swiat::getOrganizmNaPolu(int x, int y) const {
     for (Organizm* org : organizmy) {

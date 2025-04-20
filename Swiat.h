@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <ncurses.h>
 #include "Organizm.h"
 using namespace std;
 
@@ -13,8 +14,12 @@ class Swiat {
         int wysokoscPlanszy;
         vector<Organizm*> organizmy;
         vector<Organizm*> noweOrganizmy;
+        vector<string> logi;
+
+        WINDOW* gameWin;
+        WINDOW* logWin;
+
         void wykonajWszystkieAkcje();
-        void sprawdzWszystkieKolizje();
         void usunWszystkieMartwe();
         void sortujOrganizmy();
 
@@ -26,10 +31,18 @@ class Swiat {
         void wykonajTure();
         void rysujSwiat() const;
         void dodajOrganizm(Organizm* org);
+        void dodajLog(string tekst);
+        void wypiszLogi(int offset) const;
+
+        void inicjalizujOkna();
+        void zakonczOkna();
         
         Organizm* getOrganizmNaPolu(int x, int y) const;
         int getSzerokosc() const;
         int getWysokosc() const;
+        WINDOW* getGameWin() const { return gameWin; }
+        WINDOW* getLogWin() const { return logWin; }
+        vector<string> getLogi() const { return logi; }
 };
 
 #endif

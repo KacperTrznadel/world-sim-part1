@@ -20,35 +20,41 @@ int main() {
     const int wysokosc = 20;
 
     Swiat swiat(szerokosc, wysokosc);
+    swiat.inicjalizujOkna();
+    swiat.dodajLog("Symulacja rozpoczeta.");
 
     // Dodaj kilka organizmów na start (dla testów)
     swiat.dodajOrganizm(new Wilk(&swiat, 2, 2));
-    swiat.dodajOrganizm(new Owca(&swiat, 5, 5));
-    swiat.dodajOrganizm(new Lis(&swiat, 8, 8));
-    swiat.dodajOrganizm(new Zolw(&swiat, 12, 12));
-    swiat.dodajOrganizm(new Antylopa(&swiat, 10, 10));
+    swiat.dodajOrganizm(new Antylopa(&swiat, 5, 5));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 8, 8));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 12, 12));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 10, 10));
 
-    // Inicjalizacja ncurses (potrzebna, jeśli rysowanie świata wywołuje się tylko raz)
-    initscr();
-    cbreak();
-    noecho();
-    keypad(stdscr, TRUE);
+    int logOffset = 0;
 
     // Główna pętla symulacji
     while (true) {
-        clear();  // czyść ekran przed rysowaniem
         swiat.rysujSwiat();
-        mvprintw(wysokosc + 1, 0, "Nacisnij dowolny klawisz, aby przejsc do kolejnej tury (ESC aby wyjsc).");
+        mvprintw(wysokosc + 3, 0, "Nacisnij SPACJE, aby przejsc do kolejnej tury (ESC aby wyjsc).");
+        mvprintw(wysokosc + 4, 0, "Logi: (uzyj strzalek do przewijania)");
         refresh();
 
-        int ch = getch();
-        if (ch == 27) break;  // ESC kończy program
-
-        swiat.wykonajTure();
+        int ch = wgetch(swiat.getGameWin());
+        if (ch == 27) break;
+        if (ch == ' ') {
+            swiat.wykonajTure();
+            swiat.dodajLog("=======NOWA TURA=======");
+            swiat.wypiszLogi(logOffset);
+        } else if (ch == KEY_DOWN) {
+            if (logOffset > 0) logOffset--;
+            swiat.wypiszLogi(logOffset);
+        } else if (ch == KEY_UP) {
+            int maxOffset = max(0, (int)swiat.getLogi().size() - (getmaxy(swiat.getLogWin()) - 2));
+            if (logOffset < maxOffset) logOffset++;
+            swiat.wypiszLogi(logOffset);
+        }
     }
 
-    // Zakończenie ncurses
-    endwin();
-
+    swiat.zakonczOkna();
     return 0;
 }
