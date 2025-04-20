@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Organizm.h"
+#include "Swiat.h"
+using namespace std;
 
 Organizm::Organizm(Swiat* swiat, int sila, int inicjatywa, int x, int y)
     : swiat(swiat), sila(sila), inicjatywa(inicjatywa), x(x), y(y) {}
@@ -18,6 +20,9 @@ int Organizm::getY() const {
 }
 int Organizm::getWiek() const {
     return wiek;
+}
+Swiat* Organizm::getSwiat() const {
+    return swiat;
 }
 bool Organizm::czyZywy() const {
     return zywy;

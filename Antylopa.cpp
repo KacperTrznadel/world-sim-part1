@@ -1,12 +1,13 @@
 #include <iostream>
 #include "Antylopa.h"
+#include "Swiat.h"
 using namespace std;
 
 Antylopa::Antylopa(Swiat* swiat, int x, int y) : Zwierze(swiat, 4, 4, x, y) {}
 char Antylopa::rysowanie() const {
     return 'A';
 }
-Organizm* Antylopa::klonuj(int x, int y) const {
+Organizm* Antylopa::klonuj(Swiat* swiat, int x, int y) const  {
     return new Antylopa(swiat, x, y);
 }
 void Antylopa::akcja() {
@@ -16,16 +17,19 @@ void Antylopa::akcja() {
 
     int kierunek = rand() % 4;
 
-    int newX = x + dx[kierunek];
-    int newY = y + dy[kierunek];
+    int oldX = getX();
+    int oldY = getY();
+
+    int newX = oldX + dx[kierunek];
+    int newY = oldY + dy[kierunek];
+
+    Swiat* swiat = getSwiat();
 
     if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
         Organizm* cel = swiat->getOrganizmNaPolu(newX, newY);
         if (cel == nullptr) {
             setPozycja(newX, newY);
         } else {
-            int oldX = x;
-            int oldY = y;
             kolizja(cel, oldX, oldY);
         }
     }
@@ -37,8 +41,9 @@ void Antylopa::kolizja(Organizm* inny, int oldX, int oldY) {
         int dx[] = { 0, 1, 0, -1 };
         int dy[] = { -1, 0, 1, 0 };
         for (int i = 0; i < 4; i++) {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
+            int newX = getX() + dx[i];
+            int newY = getY() + dy[i];
+            Swiat* swiat = getSwiat();
             if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc() && swiat->getOrganizmNaPolu(newX, newY) == nullptr) {
                 setPozycja(newX, newY);
                 return;
@@ -56,8 +61,9 @@ bool Antylopa::czyOdbilAtak(Organizm* atakujacy) {
         int dx[] = { 0, 1, 0, -1 };
         int dy[] = { -1, 0, 1, 0 };
         for (int i = 0; i < 4; i++) {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
+            int newX = getX() + dx[i];
+            int newY = getY() + dy[i];
+            Swiat* swiat = getSwiat();
             if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc() && swiat->getOrganizmNaPolu(newX, newY) == nullptr) {
                 setPozycja(newX, newY);
                 cout << "Antylopa uciekla przed atakiem!" << endl;

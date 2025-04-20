@@ -11,7 +11,7 @@ public:
     virtual ~Owca() {};
 
     virtual char rysowanie() const override;
-    virtual Organizm* klonuj(int x, int y) const override;
+    virtual Organizm* klonuj(Swiat* swiat, int x, int y) const override;
 };
 
 #endif

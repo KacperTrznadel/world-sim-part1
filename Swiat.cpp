@@ -1,5 +1,5 @@
 #include <iostream>
-#include <nucurses.h>
+#include <ncurses.h>
 #include <vector>
 #include "Swiat.h"
 using namespace std;
@@ -21,15 +21,6 @@ void Swiat::wykonajWszystkieAkcje() {
     for (int i = 0; i < organizmy.size(); i++) {
         if (organizmy[i]->czyZywy()) {
             organizmy[i]->akcja();
-        }
-    }
-}
-void Swiat::sprawdzWszystkieKolizje() {
-    for (int i = 0; i < organizmy.size(); i++) {
-        for (int j = i + 1; j < organizmy.size(); j++) {
-            if (organizmy[i]->getX() == organizmy[j]->getX() && organizmy[i]->getY() == organizmy[j]->getY()) {
-                organizmy[i]->kolizja(organizmy[j]);
-            }
         }
     }
 }
@@ -67,7 +58,6 @@ void Swiat::sortujOrganizmy() {
 void Swiat::wykonajTure() {
     sortujOrganizmy();
     wykonajWszystkieAkcje();
-    sprawdzWszystkieKolizje();
     usunWszystkieMartwe();
 
     for (Organizm* org : noweOrganizmy) {

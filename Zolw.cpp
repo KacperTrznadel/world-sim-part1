@@ -1,12 +1,13 @@
 #include <iostream>
 #include "Zolw.h"
+#include "Swiat.h"
 using namespace std;
 
 Zolw::Zolw(Swiat* swiat, int x, int y) : Zwierze(swiat, 2, 1, x, y) {}
 char Zolw::rysowanie() const {
     return 'Z';
 }
-Organizm* Zolw::klonuj(int x, int y) const {
+Organizm* Zolw::klonuj(Swiat* swiat, int x, int y) const  {
     return new Zolw(swiat, x, y);
 }
 void Zolw::akcja() {

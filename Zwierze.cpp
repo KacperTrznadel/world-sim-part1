@@ -13,8 +13,13 @@ void Zwierze::akcja() {
     int dy[] = { -1, 0, 1, 0 };
     int kierunek = rand() % 4;
 
-    int newX = x + dx[kierunek];
-    int newY = y + dy[kierunek];
+    int oldX = getX();
+    int oldY = getY();
+
+    int newX = oldX + dx[kierunek];
+    int newY = oldY + dy[kierunek];
+
+    Swiat* swiat = getSwiat();
 
     if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
 
@@ -22,8 +27,6 @@ void Zwierze::akcja() {
         if (cel == nullptr) {
             setPozycja(newX, newY);
         } else {
-            int oldX = x;
-            int oldY = y;
             kolizja(cel, oldX, oldY);
         }
     }
@@ -36,12 +39,12 @@ void Zwierze::kolizja(Organizm* inny, int oldX, int oldY) {
         int dy[] = { -1, 0, 1, 0 };
 
         for (int i = 0; i < 4; i++) {
-            int newX = x + dx[i];
-            int newY = y + dy[i];
-
+            int newX = getX() + dx[i];
+            int newY = getY() + dy[i];
+            Swiat* swiat = getSwiat();
             if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc() && swiat->getOrganizmNaPolu(newX, newY) == nullptr) {
                 
-                Organizm* potomek = this->klonuj(newX, newY);
+                Organizm* potomek = this->klonuj(swiat, newX, newY);
                 swiat->dodajOrganizm(potomek);
                 return;
             }

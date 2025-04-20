@@ -11,9 +11,9 @@ public:
     virtual ~Antylopa() {};
 
     virtual char rysowanie() const override;
-    virtual Organizm* klonuj(int x, int y) const override;
+    virtual Organizm* klonuj(Swiat* swiat, int x, int y) const override;
     virtual void akcja() override;
-    virtual void kolizja(Organizm* inny) override;
+    virtual void kolizja(Organizm* inny, int oldX, int oldY) override;
     virtual bool czyOdbilAtak(Organizm* atakujacy) override;
 
 };
