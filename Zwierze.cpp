@@ -13,24 +13,37 @@ void Zwierze::akcja() {
     wiekInkrementacja();
     int dx[] = { 0, 1, 0, -1 };
     int dy[] = { -1, 0, 1, 0 };
-    int kierunek = rand() % 4;
 
-    int oldX = getX();
-    int oldY = getY();
+    int kierunki[4] = {0, 1, 2, 3};
 
-    int newX = oldX + dx[kierunek];
-    int newY = oldY + dy[kierunek];
+    // Tasowanie kierunków
+    for (int i = 3; i > 0; --i) {
+        int j = rand() % (i + 1);
+        swap(kierunki[i], kierunki[j]);
+    }
 
     Swiat* swiat = getSwiat();
 
-    if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
-        Organizm* cel = swiat->getOrganizmNaPolu(newX, newY);
-        if (cel == nullptr) {
-            swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
-            setPozycja(newX, newY);
-        } else {
-            swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*cel).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
-            kolizja(cel, oldX, oldY);
+    for (int i = 0; i < 4; ++i) {
+        int k = kierunki[i];
+        
+        int newX = getX() + dx[k];
+        int newY = getY() + dy[k];
+
+        int oldX = getX();
+        int oldY = getY();
+
+        if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
+            Organizm* cel = swiat->getOrganizmNaPolu(newX, newY);
+            if (cel == nullptr) {
+                swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                setPozycja(newX, newY);
+                return;
+            } else {
+                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*cel).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                kolizja(cel, oldX, oldY);
+                return;
+            }
         }
     }
 }
