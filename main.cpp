@@ -62,10 +62,10 @@ int main() {
             swiat.wykonajTure();
             swiat.dodajLog("=======NOWA TURA=======");
             swiat.wypiszLogi(logOffset);
-        } else if (ch == KEY_DOWN) {
+        } else if (ch == 's') {
             if (logOffset > 0) logOffset--;
             swiat.wypiszLogi(logOffset);
-        } else if (ch == KEY_UP) {
+        } else if (ch == 'w') {
             int maxOffset = max(0, (int)swiat.getLogi().size() - (getmaxy(swiat.getLogWin()) - 2));
             if (logOffset < maxOffset) logOffset++;
             swiat.wypiszLogi(logOffset);
