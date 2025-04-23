@@ -16,6 +16,7 @@
 #include "Mlecz.h"
 #include "Trawa.h"
 #include "WilczeJagody.h"
+#include "Czlowiek.h"
 
 using namespace std;
 
@@ -40,13 +41,19 @@ int main() {
     //swiat.dodajOrganizm(new Mlecz(&swiat, 3, 3));
     //swiat.dodajOrganizm(new Trawa(&swiat, 4, 4));
     //swiat.dodajOrganizm(new WilczeJagody(&swiat, 6, 6));
-    swiat.dodajOrganizm(new Zolw(&swiat, 1, 1));
-    swiat.dodajOrganizm(new Zolw(&swiat, 2, 2));
-    swiat.dodajOrganizm(new Zolw(&swiat, 3, 3));
-    swiat.dodajOrganizm(new Zolw(&swiat, 4, 4));
-    swiat.dodajOrganizm(new Owca(&swiat, 5, 5));
-    swiat.dodajOrganizm(new Owca(&swiat, 6, 6));
-    swiat.dodajOrganizm(new Owca(&swiat, 7, 7));
+    //swiat.dodajOrganizm(new Zolw(&swiat, 2, 4));
+    //swiat.dodajOrganizm(new Owca(&swiat, 1, 6));
+    //swiat.dodajOrganizm(new Owca(&swiat, 3, 2));
+    //swiat.dodajOrganizm(new Zolw(&swiat, 1, 1));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 5, 6));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 6, 5));
+    //swiat.dodajOrganizm(new Lis(&swiat, 5, 5));
+    //swiat.dodajOrganizm(new Zolw(&swiat, 5, 4));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 4, 5));
+    swiat.dodajOrganizm(new Antylopa(&swiat, 7, 7));
+    swiat.dodajOrganizm(new Wilk(&swiat, 8, 8));
+    //swiat.dodajOrganizm(new Owca(&swiat, 3, 3));
+    //swiat.dodajOrganizm(new Czlowiek(&swiat, 5, 5));
     int logOffset = 0;
 
     // Główna pętla symulacji

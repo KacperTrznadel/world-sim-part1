@@ -23,4 +23,5 @@ class Czlowiek : public Zwierze {
         int getDzialanieTarczy() const { return dzialanieTarczy; }
         void setDzialanieTarczy(int dzialanie) { this->dzialanieTarczy = dzialanie; }
         virtual char rysowanie() const override;
+        virtual Organizm* klonuj(Swiat* swiat, int x, int y) const override;
 };

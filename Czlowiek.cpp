@@ -9,17 +9,35 @@ Czlowiek::Czlowiek(Swiat* swiat, int x, int y) : Zwierze(swiat, 5, 4, x, y) {}
 char Czlowiek::rysowanie() const {
     return 'C';
 }
+Organizm* Czlowiek::klonuj(Swiat* swiat, int x, int y) const {
+    return new Czlowiek(swiat, x, y);
+}
 
 void Czlowiek::akcja() {
 
     Swiat* swiat = getSwiat();
-    swiat->dodajLog("Wybierz kierunek ruchu czlowieka (strzałki) lub umiejetnosc - Tarcza Alzura (a):");
+    //swiat->dodajLog("Wybierz kierunek ruchu czlowieka (strzałki) lub umiejetnosc - Tarcza Alzura (a):");
     wiekInkrementacja();
     int klawisz = getch();
     int oldX = getX();
     int oldY = getY();
     int newX;
     int newY;
+
+    //Akutalizacja dzialania i cooldownu
+    if(this->getDzialanieTarczy() > 0) {
+        this->setDzialanieTarczy(this->getDzialanieTarczy() - 1);
+    } 
+    if(this->getCooldown() > 0) {
+        this->setTarczaAktywna(false);
+        this->setCooldown(this->getCooldown() - 1);
+        swiat->dodajLog("Tarcza Alzura bedzie dostepna za " + to_string(this->getCooldown()) + " tur!");
+    }
+    if(this->getDzialanieTarczy() == 0 && this->czyTarczaAktywna()) {
+        this->setTarczaAktywna(false); 
+        this->setCooldown(5);
+        swiat->dodajLog("Tarcza Alzura przestala dzialac! Ponowne uzycie bedzie mozliwe za " + to_string(this->getCooldown()) + " tur!");
+    }
 
     switch (klawisz) {
         case KEY_UP:
@@ -28,6 +46,9 @@ void Czlowiek::akcja() {
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
                 swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
+            } else if(swiat->getOrganizmNaPolu(newX, newY) != nullptr) {
+                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*swiat->getOrganizmNaPolu(newX, newY)).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                kolizja(swiat->getOrganizmNaPolu(newX, newY), oldX, oldY);
             }
             break;
         case KEY_DOWN:
@@ -36,6 +57,9 @@ void Czlowiek::akcja() {
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
                 swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
+            } else if(swiat->getOrganizmNaPolu(newX, newY) != nullptr) {
+                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*swiat->getOrganizmNaPolu(newX, newY)).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                kolizja(swiat->getOrganizmNaPolu(newX, newY), oldX, oldY);
             }
             break;
         case KEY_LEFT:
@@ -44,6 +68,9 @@ void Czlowiek::akcja() {
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
                 swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
+            } else if(swiat->getOrganizmNaPolu(newX, newY) != nullptr) {
+                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*swiat->getOrganizmNaPolu(newX, newY)).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                kolizja(swiat->getOrganizmNaPolu(newX, newY), oldX, oldY);
             }
             break;
         case KEY_RIGHT:
@@ -52,6 +79,9 @@ void Czlowiek::akcja() {
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
                 swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
+            } else if(swiat->getOrganizmNaPolu(newX, newY) != nullptr) {
+                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*swiat->getOrganizmNaPolu(newX, newY)).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                kolizja(swiat->getOrganizmNaPolu(newX, newY), oldX, oldY);
             }
             break;
         case 'a':
@@ -103,19 +133,6 @@ void Czlowiek::kolizja(Organizm* atakujacy, int oldX, int oldY) {
             }
         }
         return;
-    }
-
-    //Akutalizacja dzialania i cooldownu
-    if(this->getDzialanieTarczy() > 0) {
-        this->setDzialanieTarczy(this->getDzialanieTarczy() - 1);
-    } 
-    if(this->getCooldown() > 0) {
-        this->setTarczaAktywna(false);
-        this->setCooldown(this->getCooldown() - 1);
-    }
-    if(this->getDzialanieTarczy() == 0 && this->czyTarczaAktywna()) {
-        this->setTarczaAktywna(false); 
-        this->setCooldown(5);
     }
 
     if (atakujacy->getSila() > this->getSila()) {

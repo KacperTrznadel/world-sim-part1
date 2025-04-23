@@ -59,6 +59,7 @@ void Antylopa::kolizja(Organizm* inny, int oldX, int oldY) {
             int newY = getY() + dy[i];
             Swiat* swiat = getSwiat();
             if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc() && swiat->getOrganizmNaPolu(newX, newY) == nullptr) {
+                swiat->dodajLog(typeid(*this).name() + string(" uciekla przed swoim atakiem na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 setPozycja(newX, newY);
                 return;
             }
