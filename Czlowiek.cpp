@@ -6,41 +6,49 @@ using namespace std;
 
 Czlowiek::Czlowiek(Swiat* swiat, int x, int y) : Zwierze(swiat, 5, 4, x, y) {}
 
+char Czlowiek::rysowanie() const {
+    return 'C';
+}
+
 void Czlowiek::akcja() {
+
+    Swiat* swiat = getSwiat();
     swiat->dodajLog("Wybierz kierunek ruchu czlowieka (strzałki) lub umiejetnosc - Tarcza Alzura (a):");
     wiekInkrementacja();
     int klawisz = getch();
     int oldX = getX();
     int oldY = getY();
+    int newX;
+    int newY;
 
     switch (klawisz) {
         case KEY_UP:
-            int newX = oldX;
-            int newY = oldY - 1;
+            newX = oldX;
+            newY = oldY - 1;
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
                 swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
             }
             break;
         case KEY_DOWN:
-            int newX = oldX;
-            int newY = oldY + 1;
+            newX = oldX;
+            newY = oldY + 1;
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
                 swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
             }
             break;
         case KEY_LEFT:
-            int newX = oldX - 1;
-            int newY = oldY;
+            newX = oldX - 1;
+            newY = oldY;
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
                 swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
             }
             break;
         case KEY_RIGHT:
-            int newX = oldX + 1;
-            int newY = oldY;
+            newX = oldX + 1;
+            newY = oldY;
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
                 swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
@@ -60,6 +68,7 @@ void Czlowiek::akcja() {
     }
 }
 bool Czlowiek::czyOdbilAtak(Organizm* atakujacy) {
+    Swiat* swiat = getSwiat();
     if(this->czyTarczaAktywna() && this->getCooldown() == 0 && this->getDzialanieTarczy() > 0) {
         swiat->dodajLog("Czlowiek odbil atak za pomoca Tarczy Alzura!");
         return true;

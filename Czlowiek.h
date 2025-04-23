@@ -22,6 +22,5 @@ class Czlowiek : public Zwierze {
         int getCooldown() const { return cooldown; }
         int getDzialanieTarczy() const { return dzialanieTarczy; }
         void setDzialanieTarczy(int dzialanie) { this->dzialanieTarczy = dzialanie; }
-        void tarczaAlzura();
-        virtual char rysowanie() override;
-}
+        virtual char rysowanie() const override;
+};
