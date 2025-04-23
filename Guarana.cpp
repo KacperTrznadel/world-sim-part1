@@ -12,8 +12,8 @@ Organizm* Guarana::klonuj(Swiat* swiat, int x, int y) const {
     return new Guarana(swiat, x, y);
 }
 void Guarana::kolizja(Organizm* inny, int oldX, int oldY) {
-    getSwiat()->dodajLog(inny->getNazwa() + " zjada Guarane na polu (" + to_string(getX()) + "," + to_string(getY()) + ")");
-    getSwiat()->dodajLog(inny->getNazwa() + " zwieksza sile o 3. Jest ona teraz rowna " + to_string(inny->getSila() + 3));
+    getSwiat()->dodajLog(typeid(*this).name() + string(" zjada Guarane na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
+    getSwiat()->dodajLog(typeid(*this).name() + string(" zwieksza sile o 3. Jest ona teraz rowna ") + to_string(getSila() + 3));
     inny->setSila(inny->getSila() + 3);
     this->zabij();
 }

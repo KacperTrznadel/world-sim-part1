@@ -29,13 +29,14 @@ void Roslina::akcja() {
                 
                 Organizm* nowa = klonuj(getSwiat(), newX, newY);
                 getSwiat()->dodajOrganizm(nowa);
-                getSwiat()->dodajLog("Roslina rozsiala sie na (" + to_string(newX) + "," + to_string(newY) + ")");
+                getSwiat()->dodajLog(typeid(*this).name() + string(" rozsial sie na (") + to_string(newX) + "," + to_string(newY) + ")");
                 return;
             }
         }
     }
 }
+
 void Roslina::kolizja(Organizm* inny, int oldX, int oldY) {
-    getSwiat()->dodajLog(inny->getNazwa() + " zjada " + getNazwa() + " na polu (" + to_string(getX()) + "," + to_string(getY()) + ")");
+    getSwiat()->dodajLog(typeid(*this).name() + string(" zjada ") + typeid(*inny).name() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
     this->zabij();
 }

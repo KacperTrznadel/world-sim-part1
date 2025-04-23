@@ -11,7 +11,5 @@ public:
 
     virtual void akcja() override;
     virtual void kolizja(Organizm* inny, int oldX, int oldY) override;
-    virtual char rysowanie() const override;
-    virtual Organizm* klonuj(Swiat* swiat, int x, int y) const override;
 };
 #endif

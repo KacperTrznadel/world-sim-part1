@@ -22,7 +22,7 @@ void Zolw::akcja() {
 }
 bool Zolw::czyOdbilAtak(Organizm* atakujacy) {
     if (atakujacy->getSila() < 5) {
-        cout << "Zolw odbil atak!" << endl;
+        getSwiat()->dodajLog(typeid(*this).name() + string(" odbil atak ") + typeid(*atakujacy).name() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
         return true;
     }
     return false;
