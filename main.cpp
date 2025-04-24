@@ -88,6 +88,7 @@ int main() {
         mvprintw(wysokosc + 3, 0, "Nacisnij SPACJE, aby przejsc do kolejnej tury (ESC aby wyjsc).");
         mvprintw(wysokosc + 4, 0, "Uzyj strzalek do poruszania sie czlowiekiem, jesli znajduje sie na planszy.");
         mvprintw(wysokosc + 5, 0, "Logi: (uzyj 'w' oraz 's' do przewijania)");
+        mvprintw(wysokosc + 6, 0, "Wcisnij 'z' aby zapisac do pliku, 'l' aby wczytac z pliku.");
         refresh();
 
         int ch = wgetch(swiat.getGameWin());
@@ -103,6 +104,12 @@ int main() {
             int maxOffset = max(0, (int)swiat.getLogi().size() - (getmaxy(swiat.getLogWin()) - 2));
             if (logOffset < maxOffset) logOffset++;
             swiat.wypiszLogi(logOffset);
+        } else if (ch == 'z') {
+            swiat.zapiszDoPliku("stan_swiata.txt");
+            swiat.dodajLog("Stan gry zapisany do pliku.");
+        } else if (ch == 'l') {
+            swiat.wczytajZPliku("stan_swiata.txt");
+            swiat.dodajLog("Stan gry wczytany z pliku.");
         }
     }
 

@@ -3,6 +3,21 @@
 #include <vector>
 #include <fstream>
 #include "Swiat.h"
+#include "Organizm.h"
+#include "Zwierze.h"
+#include "Roslina.h"
+#include "Wilk.h"
+#include "Owca.h"
+#include "Lis.h"
+#include "Zolw.h"
+#include "Antylopa.h"
+#include "BarszczSosnowskiego.h"
+#include "Guarana.h"
+#include "Mlecz.h"
+#include "Trawa.h"
+#include "WilczeJagody.h"
+#include "Czlowiek.h"
+
 using namespace std;
 
 Swiat::Swiat(int newX, int newY): szerokoscPlanszy(newX), wysokoscPlanszy(newY), gameWin(nullptr), logWin(nullptr) {}
@@ -158,4 +173,65 @@ int Swiat::getSzerokosc() const {
 }
 int Swiat::getWysokosc() const {
     return wysokoscPlanszy;
+}
+void Swiat::zapiszDoPliku(string nazwaPliku) {
+    ofstream plik(nazwaPliku);
+    if (!plik.is_open()) {
+        return;
+    }
+
+    // Zapisz wymiary świata
+    plik << szerokoscPlanszy << " " << wysokoscPlanszy << endl;
+
+    // Zapisz organizmy
+    for (const Organizm* org : organizmy) {
+        plik << typeid(*org).name() << " " << org->getX() << " " << org->getY() << " " << org->getSila() << " " << org->getWiek() << endl;
+    }
+
+    plik.close();
+}
+
+void Swiat::wczytajZPliku(string nazwaPliku) {
+    ifstream plik(nazwaPliku);
+    if (!plik.is_open()) {
+        return;
+    }
+
+    // Usuń istniejące organizmy
+    for (Organizm* org : organizmy) {
+        delete org;
+    }
+    organizmy.clear();
+
+    // Wczytaj wymiary świata
+    plik >> szerokoscPlanszy >> wysokoscPlanszy;
+
+    // Wczytaj organizmy
+    string typ;
+    int x, y, sila, wiek;
+    while (plik >> typ >> x >> y >> sila >> wiek) {
+        Organizm* nowy = nullptr;
+
+        // Tworzenie odpowiedniego organizmu na podstawie typu
+        if (typ == typeid(Wilk).name()) nowy = new Wilk(this, x, y);
+        else if (typ == typeid(Owca).name()) nowy = new Owca(this, x, y);
+        else if (typ == typeid(Lis).name()) nowy = new Lis(this, x, y);
+        else if (typ == typeid(Zolw).name()) nowy = new Zolw(this, x, y);
+        else if (typ == typeid(Antylopa).name()) nowy = new Antylopa(this, x, y);
+        else if (typ == typeid(Trawa).name()) nowy = new Trawa(this, x, y);
+        else if (typ == typeid(Mlecz).name()) nowy = new Mlecz(this, x, y);
+        else if (typ == typeid(Guarana).name()) nowy = new Guarana(this, x, y);
+        else if (typ == typeid(WilczeJagody).name()) nowy = new WilczeJagody(this, x, y);
+        else if (typ == typeid(BarszczSosnowskiego).name()) nowy = new BarszczSosnowskiego(this, x, y);
+        else if (typ == typeid(Czlowiek).name()) nowy = new Czlowiek(this, x, y);
+
+        if (nowy) {
+            nowy->setSila(sila);
+            nowy->setWiek(wiek);
+            Swiat* swiat = nowy->getSwiat();
+            swiat->dodajOrganizm(nowy);
+        }
+    }
+
+    plik.close();
 }

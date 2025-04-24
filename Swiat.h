@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
+#include <fstream>
 #include "Organizm.h"
 using namespace std;
 
@@ -28,6 +29,8 @@ class Swiat {
         Swiat(int szerokoscPlanszy, int wysokoscPlanszy);
         ~Swiat();
 
+        void zapiszDoPliku(string nazwaPliku);
+        void wczytajZPliku(string nazwaPliku);
         void wykonajTure();
         void rysujSwiat() const;
         void dodajOrganizm(Organizm* org);

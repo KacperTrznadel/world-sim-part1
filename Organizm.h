@@ -38,6 +38,7 @@ class Organizm {
         void setSila(int sila);
         void setPozycja(int newX, int newY);
         void wiekInkrementacja();
+        void setWiek(int wiek) { this->wiek = wiek; }
         void zabij();
 
 };
