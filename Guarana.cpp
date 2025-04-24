@@ -15,5 +15,6 @@ void Guarana::kolizja(Organizm* inny, int oldX, int oldY) {
     getSwiat()->dodajLog(typeid(*inny).name() + string(" zjada Guarane na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
     getSwiat()->dodajLog(typeid(*inny).name() + string(" zwieksza sile o 3. Jest ona teraz rowna ") + to_string(inny->getSila() + 3));
     inny->setSila(inny->getSila() + 3);
+    inny->setPozycja(this->getX(), this->getY());
     this->zabij();
 }

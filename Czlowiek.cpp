@@ -148,10 +148,11 @@ void Czlowiek::kolizja(Organizm* atakujacy, int oldX, int oldY) {
     }
 
     if (atakujacy->getSila() > this->getSila()) {
-        swiat->dodajLog(typeid(*this).name() + string(" zostal zabity przez ") + typeid(*atakujacy).name() + string(" na polu (") + to_string(oldX) + "," + to_string(oldY) + ")"); 
+        swiat->dodajLog(typeid(*this).name() + string(" zostal zabity przez ") + typeid(*atakujacy).name() + string(" na polu (") + to_string(atakujacy->getX()) + "," + to_string(atakujacy->getY()) + ")"); 
         this->zabij();
     } else {
-        swiat->dodajLog(typeid(*this).name() + string(" pokonal ") + typeid(*atakujacy).name() + string(" na polu (") + to_string(oldX) + "," + to_string(oldY) + ")");
+        swiat->dodajLog(typeid(*this).name() + string(" pokonal ") + typeid(*atakujacy).name() + string(" na polu (") + to_string(atakujacy->getX()) + "," + to_string(atakujacy->getY()) + ")");
+        setPozycja(atakujacy->getX(), atakujacy->getY());
         atakujacy->zabij();
     }
 }

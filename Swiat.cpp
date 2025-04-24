@@ -74,7 +74,9 @@ void Swiat::rysujSwiat() const {
     box(gameWin, 0, 0);
 
     for (Organizm* org : organizmy) {
-        mvwaddch(gameWin, org->getY() + 1, org->getX() + 1, org->rysowanie());
+        if(org->czyZywy()) {
+            mvwaddch(gameWin, org->getY() + 1, org->getX() + 1, org->rysowanie());
+        }
     }
 
     wrefresh(gameWin);
@@ -162,7 +164,12 @@ void Swiat::wykonajTure() {
 }
 Organizm* Swiat::getOrganizmNaPolu(int x, int y) const {
     for (Organizm* org : organizmy) {
-        if (org->getX() == x && org->getY() == y) {
+        if (org->getX() == x && org->getY() == y && org->czyZywy()) {
+            return org;
+        }
+    }
+    for (Organizm* org : noweOrganizmy) {
+        if (org->getX() == x && org->getY() == y && org->czyZywy()) {
             return org;
         }
     }

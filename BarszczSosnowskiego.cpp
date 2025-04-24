@@ -56,6 +56,7 @@ void BarszczSosnowskiego::akcja() {
 void BarszczSosnowskiego::kolizja(Organizm* inny, int oldX, int oldY) {
     getSwiat()->dodajLog(typeid(*inny).name() + string(" zjada ") + typeid(*this).name() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
     getSwiat()->dodajLog(typeid(*inny).name() + string(" umiera na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
+    inny->setPozycja(this->getX(), this->getY());
     this->zabij();
     inny->zabij();
 }

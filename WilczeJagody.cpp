@@ -14,6 +14,7 @@ Organizm* WilczeJagody::klonuj(Swiat* swiat, int x, int y) const {
 void WilczeJagody::kolizja(Organizm* inny, int oldX, int oldY) {
     getSwiat()->dodajLog(typeid(*inny).name() + string(" zjada Wilcze Jagody na polu (") + to_string(this->getX()) + "," + to_string(this->getY()) + ")");
     getSwiat()->dodajLog(typeid(*inny).name() + string(" umiera na polu (") + to_string(this->getX()) + "," + to_string(this->getY()) + ")");
+    inny->setPozycja(this->getX(), this->getY());
     this->zabij();
     inny->zabij();
 }
