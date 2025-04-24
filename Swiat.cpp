@@ -192,6 +192,11 @@ void Swiat::zapiszDoPliku(string nazwaPliku) {
         plik << org->getNazwa() << " " << org->getX() << " " << org->getY() << " " << org->getSila() << " " << org->getWiek() << endl;
     }
 
+    plik << "#LOGI" << endl; // Separator dla logów
+    for (string log : logi) {
+        plik << log << endl;
+    }
+
     plik.close();
 }
 
@@ -213,7 +218,10 @@ void Swiat::wczytajZPliku(string nazwaPliku) {
     // Wczytaj organizmy
     string typ;
     int x, y, sila, wiek;
-    while (plik >> typ >> x >> y >> sila >> wiek) {
+    while (plik >> typ) {
+        if (typ == "#LOGI") break; // Separator dla logów
+
+        plik >> x >> y >> sila >> wiek;
         Organizm* nowy = nullptr;
 
         // Tworzenie odpowiedniego organizmu na podstawie typu
@@ -234,6 +242,15 @@ void Swiat::wczytajZPliku(string nazwaPliku) {
             nowy->setWiek(wiek);
             Swiat* swiat = nowy->getSwiat();
             swiat->dodajOrganizm(nowy);
+        }
+    }
+
+    // Wczytaj logi
+    logi.clear();
+    string linia;
+    while (getline(plik, linia)) {
+        if (!linia.empty()) {
+            logi.push_back(linia);
         }
     }
 
