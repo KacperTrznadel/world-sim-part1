@@ -4,7 +4,7 @@
 #include "Swiat.h"
 using namespace std;
 
-Wilk::Wilk(Swiat* swiat, int x, int y) : Zwierze(swiat, 9, 5, x, y) {}
+Wilk::Wilk(Swiat* swiat, int x, int y) : Zwierze(swiat, 9, 5, x, y, "Wilk") {}
 char Wilk::rysowanie() const {
     return 'W';
 }

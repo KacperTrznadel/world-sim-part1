@@ -119,9 +119,6 @@ void Swiat::wykonajWszystkieAkcje() {
 void Swiat::usunWszystkieMartwe() {
     for (int i = 0; i < organizmy.size(); i++) {
         if (!organizmy[i]->czyZywy()) {
-            //cout << "Usuwam martwego: " << organizmy[i]->getNazwa() << endl;
-            //Swiat* swiat = organizmy[i]->getSwiat();
-            //swiat->dodajLog(typeid(*organizmy[i]).name() + string(": usuwam martwego organizm na polu (") + to_string(organizmy[i]->getX()) + "," + to_string(organizmy[i]->getY()) + ")");
             delete organizmy[i];
             organizmy.erase(organizmy.begin() + i);
             i--;
@@ -192,7 +189,7 @@ void Swiat::zapiszDoPliku(string nazwaPliku) {
 
     // Zapisz organizmy
     for (const Organizm* org : organizmy) {
-        plik << typeid(*org).name() << " " << org->getX() << " " << org->getY() << " " << org->getSila() << " " << org->getWiek() << endl;
+        plik << org->getNazwa() << " " << org->getX() << " " << org->getY() << " " << org->getSila() << " " << org->getWiek() << endl;
     }
 
     plik.close();
@@ -220,17 +217,17 @@ void Swiat::wczytajZPliku(string nazwaPliku) {
         Organizm* nowy = nullptr;
 
         // Tworzenie odpowiedniego organizmu na podstawie typu
-        if (typ == typeid(Wilk).name()) nowy = new Wilk(this, x, y);
-        else if (typ == typeid(Owca).name()) nowy = new Owca(this, x, y);
-        else if (typ == typeid(Lis).name()) nowy = new Lis(this, x, y);
-        else if (typ == typeid(Zolw).name()) nowy = new Zolw(this, x, y);
-        else if (typ == typeid(Antylopa).name()) nowy = new Antylopa(this, x, y);
-        else if (typ == typeid(Trawa).name()) nowy = new Trawa(this, x, y);
-        else if (typ == typeid(Mlecz).name()) nowy = new Mlecz(this, x, y);
-        else if (typ == typeid(Guarana).name()) nowy = new Guarana(this, x, y);
-        else if (typ == typeid(WilczeJagody).name()) nowy = new WilczeJagody(this, x, y);
-        else if (typ == typeid(BarszczSosnowskiego).name()) nowy = new BarszczSosnowskiego(this, x, y);
-        else if (typ == typeid(Czlowiek).name()) nowy = new Czlowiek(this, x, y);
+        if (typ == "Wilk") nowy = new Wilk(this, x, y);
+        else if (typ == "Owca") nowy = new Owca(this, x, y);
+        else if (typ == "Lis") nowy = new Lis(this, x, y);
+        else if (typ == "Zolw") nowy = new Zolw(this, x, y);
+        else if (typ == "Antylopa") nowy = new Antylopa(this, x, y);
+        else if (typ == "Trawa") nowy = new Trawa(this, x, y);
+        else if (typ == "Mlecz") nowy = new Mlecz(this, x, y);
+        else if (typ == "Guarana") nowy = new Guarana(this, x, y);
+        else if (typ == "Wilcze Jagody") nowy = new WilczeJagody(this, x, y);
+        else if (typ == "Barszcz Sosnowskiego") nowy = new BarszczSosnowskiego(this, x, y);
+        else if (typ == "Czlowiek") nowy = new Czlowiek(this, x, y);
 
         if (nowy) {
             nowy->setSila(sila);

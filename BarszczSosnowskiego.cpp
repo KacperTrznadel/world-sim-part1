@@ -5,7 +5,7 @@
 using namespace std;
 
 BarszczSosnowskiego::BarszczSosnowskiego(Swiat* swiat, int x, int y)
-    : Roslina(swiat, 10, x, y) {}
+    : Roslina(swiat, 10, x, y, "Barszcz Sosnowskiego") {}
 char BarszczSosnowskiego::rysowanie() const {
     return 'S';
 }
@@ -25,7 +25,7 @@ void BarszczSosnowskiego::akcja() {
         if (newX >= 0 && newX < getSwiat()->getSzerokosc() && newY >= 0 && newY < getSwiat()->getWysokosc()) {
             Organizm* cel = getSwiat()->getOrganizmNaPolu(newX, newY);
             if (cel != nullptr && dynamic_cast<Zwierze*>(cel) != nullptr) {
-                getSwiat()->dodajLog(typeid(*this).name() + string(" zabija ") + typeid(*cel).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                getSwiat()->dodajLog(this->getNazwa() + string(" zabija ") + cel->getNazwa() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
                 cel->zabij();
             }
         }
@@ -54,8 +54,8 @@ void BarszczSosnowskiego::akcja() {
     }
 }
 void BarszczSosnowskiego::kolizja(Organizm* inny, int oldX, int oldY) {
-    getSwiat()->dodajLog(typeid(*inny).name() + string(" zjada ") + typeid(*this).name() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
-    getSwiat()->dodajLog(typeid(*inny).name() + string(" umiera na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
+    getSwiat()->dodajLog(inny->getNazwa() + string(" zjada ") + this->getNazwa() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
+    getSwiat()->dodajLog(inny->getNazwa() + string(" umiera na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
     inny->setPozycja(this->getX(), this->getY());
     this->zabij();
     inny->zabij();

@@ -4,7 +4,7 @@
 using namespace std;
 
 Mlecz::Mlecz(Swiat* swiat, int x, int y)
-    : Roslina(swiat, 0, x, y) {}
+    : Roslina(swiat, 0, x, y, "Mlecz") {}
 char Mlecz::rysowanie() const {
     return 'M';
 }

@@ -7,7 +7,7 @@
 #include <curses.h>
 using namespace std;
 
-Czlowiek::Czlowiek(Swiat* swiat, int x, int y) : Zwierze(swiat, 5, 4, x, y) {}
+Czlowiek::Czlowiek(Swiat* swiat, int x, int y) : Zwierze(swiat, 5, 4, x, y, "Czlowiek") {}
 
 char Czlowiek::rysowanie() const {
     return 'C';
@@ -48,10 +48,10 @@ void Czlowiek::akcja() {
             newX = oldX;
             newY = oldY - 1;
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
-                swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
             } else if(swiat->getOrganizmNaPolu(newX, newY) != nullptr) {
-                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*swiat->getOrganizmNaPolu(newX, newY)).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" probuje wejsc na pole zajmowane przez ") + swiat->getOrganizmNaPolu(newX, newY)->getNazwa() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
                 kolizja(swiat->getOrganizmNaPolu(newX, newY), oldX, oldY);
             }
             break;
@@ -59,10 +59,10 @@ void Czlowiek::akcja() {
             newX = oldX;
             newY = oldY + 1;
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
-                swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
             } else if(swiat->getOrganizmNaPolu(newX, newY) != nullptr) {
-                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*swiat->getOrganizmNaPolu(newX, newY)).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" probuje wejsc na pole zajmowane przez ") + swiat->getOrganizmNaPolu(newX, newY)->getNazwa() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
                 kolizja(swiat->getOrganizmNaPolu(newX, newY), oldX, oldY);
             }
             break;
@@ -70,10 +70,10 @@ void Czlowiek::akcja() {
             newX = oldX - 1;
             newY = oldY;
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
-                swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
             } else if(swiat->getOrganizmNaPolu(newX, newY) != nullptr) {
-                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*swiat->getOrganizmNaPolu(newX, newY)).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" probuje wejsc na pole zajmowane przez ") + swiat->getOrganizmNaPolu(newX, newY)->getNazwa() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
                 kolizja(swiat->getOrganizmNaPolu(newX, newY), oldX, oldY);
             }
             break;
@@ -81,10 +81,10 @@ void Czlowiek::akcja() {
             newX = oldX + 1;
             newY = oldY;
             if (swiat->getOrganizmNaPolu(newX, newY) == nullptr && newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
-                swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 this->setPozycja(newX, newY);
             } else if(swiat->getOrganizmNaPolu(newX, newY) != nullptr) {
-                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*swiat->getOrganizmNaPolu(newX, newY)).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" probuje wejsc na pole zajmowane przez ") + swiat->getOrganizmNaPolu(newX, newY)->getNazwa() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
                 kolizja(swiat->getOrganizmNaPolu(newX, newY), oldX, oldY);
             }
             break;
@@ -94,7 +94,7 @@ void Czlowiek::akcja() {
             } else if (this->getCooldown() > 0) {
                 swiat->dodajLog("Czlowiek probuje uzyc Tarczy Alzura... ale umiejetnosc niedostepna jeszcze przez najblizsze " + to_string(getCooldown()) + " tur!");
             } else {
-                swiat->dodajLog(typeid(*this).name() + string(" uzywa umiejetnosci Tarcza Alzura"));
+                swiat->dodajLog(this->getNazwa() + string(" uzywa umiejetnosci Tarcza Alzura"));
                 this->setTarczaAktywna(true);
                 this->setDzialanieTarczy(5);
             }
@@ -140,7 +140,7 @@ void Czlowiek::kolizja(Organizm* atakujacy, int oldX, int oldY) {
             int newY = atakujacy->getY() + dy[k];
             if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc() && swiat->getOrganizmNaPolu(newX, newY) == nullptr) {
                 atakujacy->setPozycja(newX, newY);
-                swiat->dodajLog(typeid(*atakujacy).name() + string(" zostal odepchniety przez Tarcze Alzura na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(atakujacy->getNazwa() + string(" zostal odepchniety przez Tarcze Alzura na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 return;
             }
         }
@@ -148,10 +148,10 @@ void Czlowiek::kolizja(Organizm* atakujacy, int oldX, int oldY) {
     }
 
     if (atakujacy->getSila() > this->getSila()) {
-        swiat->dodajLog(typeid(*this).name() + string(" zostal zabity przez ") + typeid(*atakujacy).name() + string(" na polu (") + to_string(atakujacy->getX()) + "," + to_string(atakujacy->getY()) + ")"); 
+        swiat->dodajLog(this->getNazwa() + string(" zostal zabity przez ") + atakujacy->getNazwa() + string(" na polu (") + to_string(atakujacy->getX()) + "," + to_string(atakujacy->getY()) + ")"); 
         this->zabij();
     } else {
-        swiat->dodajLog(typeid(*this).name() + string(" pokonal ") + typeid(*atakujacy).name() + string(" na polu (") + to_string(atakujacy->getX()) + "," + to_string(atakujacy->getY()) + ")");
+        swiat->dodajLog(this->getNazwa() + string(" pokonal ") + atakujacy->getNazwa() + string(" na polu (") + to_string(atakujacy->getX()) + "," + to_string(atakujacy->getY()) + ")");
         setPozycja(atakujacy->getX(), atakujacy->getY());
         atakujacy->zabij();
     }

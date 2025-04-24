@@ -4,7 +4,7 @@
 using namespace std;
 
 Trawa::Trawa(Swiat* swiat, int x, int y)
-    : Roslina(swiat, 0, x, y) {}
+    : Roslina(swiat, 0, x, y, "Trawa") {}
 char Trawa::rysowanie() const {
     return 'T';
 }

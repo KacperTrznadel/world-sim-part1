@@ -3,7 +3,7 @@
 #include "Swiat.h"
 using namespace std;
 
-Antylopa::Antylopa(Swiat* swiat, int x, int y) : Zwierze(swiat, 4, 4, x, y) {}
+Antylopa::Antylopa(Swiat* swiat, int x, int y) : Zwierze(swiat, 4, 4, x, y, "Antylopa") {}
 char Antylopa::rysowanie() const {
     return 'A';
 }
@@ -37,11 +37,11 @@ void Antylopa::akcja() {
         if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
             Organizm* cel = swiat->getOrganizmNaPolu(newX, newY);
             if (cel == nullptr) {
-                swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 setPozycja(newX, newY);
                 return;
             } else {
-                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*cel).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" probuje wejsc na pole zajmowane przez ") + cel->getNazwa() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
                 kolizja(cel, oldX, oldY);
                 return;
             }
@@ -59,7 +59,7 @@ void Antylopa::kolizja(Organizm* inny, int oldX, int oldY) {
             int newY = getY() + dy[i];
             Swiat* swiat = getSwiat();
             if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc() && swiat->getOrganizmNaPolu(newX, newY) == nullptr) {
-                swiat->dodajLog(typeid(*this).name() + string(" uciekla przed swoim atakiem na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" uciekla przed swoim atakiem na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 setPozycja(newX, newY);
                 return;
             }
@@ -81,7 +81,7 @@ bool Antylopa::czyOdbilAtak(Organizm* atakujacy) {
             Swiat* swiat = getSwiat();
             if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc() && swiat->getOrganizmNaPolu(newX, newY) == nullptr) {
                 setPozycja(newX, newY);
-                swiat->dodajLog(typeid(*this).name() + string(" uciekla przed atakiem na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" uciekla przed atakiem na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 return true;
             }
         }

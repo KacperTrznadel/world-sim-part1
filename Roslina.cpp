@@ -4,8 +4,8 @@
 #include <cstdlib>
 using namespace std;
 
-Roslina::Roslina(Swiat* swiat, int sila, int x, int y)
-    : Organizm(swiat, sila, 0, x, y) {} // rośliny mają inicjatywę 0
+Roslina::Roslina(Swiat* swiat, int sila, int x, int y, string nazwa)
+    : Organizm(swiat, sila, 0, x, y, nazwa) {} // rośliny mają inicjatywę 0
 
 void Roslina::akcja() {
     wiekInkrementacja();
@@ -29,7 +29,7 @@ void Roslina::akcja() {
                 
                 Organizm* nowa = klonuj(getSwiat(), newX, newY);
                 getSwiat()->dodajOrganizm(nowa);
-                getSwiat()->dodajLog(typeid(*this).name() + string(" rozsial sie na (") + to_string(newX) + "," + to_string(newY) + ")");
+                getSwiat()->dodajLog(this->getNazwa() + string(" rozsial sie na (") + to_string(newX) + "," + to_string(newY) + ")");
                 return;
             }
         }
@@ -37,7 +37,7 @@ void Roslina::akcja() {
 }
 
 void Roslina::kolizja(Organizm* inny, int oldX, int oldY) {
-    getSwiat()->dodajLog(typeid(*inny).name() + string(" zjada ") + typeid(*this).name() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
+    getSwiat()->dodajLog(inny->getNazwa() + string(" zjada ") + this->getNazwa() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
     inny->setPozycja(this->getX(), this->getY());
     this->zabij();
 }

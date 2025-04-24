@@ -6,7 +6,7 @@ using namespace std;
 
 class Roslina : public Organizm {
 public:
-    Roslina(Swiat* swiat, int sila, int x, int y);
+    Roslina(Swiat* swiat, int sila, int x, int y, string nazwa);
     virtual ~Roslina() {}
 
     virtual void akcja() override;

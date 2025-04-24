@@ -3,8 +3,8 @@
 #include "Swiat.h"
 using namespace std;
 
-Organizm::Organizm(Swiat* swiat, int sila, int inicjatywa, int x, int y)
-    : swiat(swiat), sila(sila), inicjatywa(inicjatywa), x(x), y(y) {}
+Organizm::Organizm(Swiat* swiat, int sila, int inicjatywa, int x, int y, string nazwa)
+    : swiat(swiat), sila(sila), inicjatywa(inicjatywa), x(x), y(y), nazwa(nazwa) {}
 Organizm::~Organizm() {}
 int Organizm::getSila() const {
     return sila;
@@ -23,6 +23,9 @@ int Organizm::getWiek() const {
 }
 Swiat* Organizm::getSwiat() const {
     return swiat;
+}
+string Organizm::getNazwa() const {
+    return nazwa;
 }
 bool Organizm::czyZywy() const {
     return zywy;

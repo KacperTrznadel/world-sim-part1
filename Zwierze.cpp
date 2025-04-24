@@ -7,8 +7,8 @@
 #include <string>
 #include <ctime>
 
-Zwierze::Zwierze(Swiat* swiat, int sila, int inicjatywa, int x, int y)
-    : Organizm(swiat, sila, inicjatywa, x, y) {}
+Zwierze::Zwierze(Swiat* swiat, int sila, int inicjatywa, int x, int y, string nazwa)
+    : Organizm(swiat, sila, inicjatywa, x, y, nazwa) {}
 
 void Zwierze::akcja() {
 
@@ -38,11 +38,11 @@ void Zwierze::akcja() {
         if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc()) {
             Organizm* cel = swiat->getOrganizmNaPolu(newX, newY);
             if (cel == nullptr) {
-                swiat->dodajLog(typeid(*this).name() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" przeszedl na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 setPozycja(newX, newY);
                 return;
             } else {
-                swiat->dodajLog(typeid(*this).name() + string(" probuje wejsc na pole zajmowane przez ") + typeid(*cel).name() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" probuje wejsc na pole zajmowane przez ") + cel->getNazwa() + string(" na polu (") + to_string(newX) + "," + to_string(newY) + ")");
                 kolizja(cel, oldX, oldY);
                 return;
             }
@@ -72,7 +72,7 @@ void Zwierze::kolizja(Organizm* inny, int oldX, int oldY) {
                 
                 Organizm* potomek = this->klonuj(swiat, newX, newY);
                 swiat->dodajOrganizm(potomek);
-                swiat->dodajLog(typeid(*this).name() + string(" rozmnozyl sie na polu (") + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog(this->getNazwa() + string(" rozmnozyl sie na polu (") + to_string(newX) + "," + to_string(newY) + ")");
                 return;
             }
         }
@@ -82,20 +82,20 @@ void Zwierze::kolizja(Organizm* inny, int oldX, int oldY) {
 
     // Próba ataku
     if (inny->czyOdbilAtak(this)) {
-        swiat->dodajLog(typeid(*this).name() + string(" zostal odepchniety z ataku przez ") + typeid(*inny).name());
+        swiat->dodajLog(this->getNazwa() + string(" zostal odepchniety z ataku przez ") + inny->getNazwa());
         setPozycja(oldX, oldY);
         return;
     }
 
-    swiat->dodajLog(typeid(*this).name() + string(" atakuje ") + typeid(*inny).name());
+    swiat->dodajLog(this->getNazwa() + string(" atakuje ") + inny->getNazwa());
 
     // Zwykła walka
     if (this->getSila() >= inny->getSila()) {
-        swiat->dodajLog(typeid(*this).name() + string(" zabija ") + typeid(*inny).name());
+        swiat->dodajLog(this->getNazwa() + string(" zabija ") + inny->getNazwa());
         inny->zabij();
         setPozycja(inny->getX(), inny->getY());
     } else {
-        swiat->dodajLog(typeid(*this).name() + string(" zostaje zabity przez ") + typeid(*inny).name());
+        swiat->dodajLog(this->getNazwa() + string(" zostaje zabity przez ") + inny->getNazwa());
         this->zabij();
     }
 }

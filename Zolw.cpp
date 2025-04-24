@@ -3,7 +3,7 @@
 #include "Swiat.h"
 using namespace std;
 
-Zolw::Zolw(Swiat* swiat, int x, int y) : Zwierze(swiat, 2, 1, x, y) {}
+Zolw::Zolw(Swiat* swiat, int x, int y) : Zwierze(swiat, 2, 1, x, y, "Zolw") {}
 char Zolw::rysowanie() const {
     return 'Z';
 }
@@ -22,7 +22,7 @@ void Zolw::akcja() {
 }
 bool Zolw::czyOdbilAtak(Organizm* atakujacy) {
     if (atakujacy->getSila() < 5) {
-        getSwiat()->dodajLog(typeid(*this).name() + string(" odbil atak ") + typeid(*atakujacy).name() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
+        getSwiat()->dodajLog(this->getNazwa() + string(" odbil atak ") + atakujacy->getNazwa() + string(" na polu (") + to_string(getX()) + "," + to_string(getY()) + ")");
         return true;
     }
     return false;

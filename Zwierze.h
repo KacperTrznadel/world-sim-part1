@@ -8,7 +8,7 @@ using namespace std;
 class Zwierze: public Organizm {
 
     public:
-    Zwierze(Swiat* swiat, int sila, int inicjatywa, int x, int y);
+    Zwierze(Swiat* swiat, int sila, int inicjatywa, int x, int y, string nazwa);
     virtual ~Zwierze() {}
 
     virtual void akcja() override;

@@ -3,7 +3,7 @@
 #include "Swiat.h"
 using namespace std;
 
-Lis::Lis(Swiat* swiat, int x, int y) : Zwierze(swiat, 3, 7, x, y) {}
+Lis::Lis(Swiat* swiat, int x, int y) : Zwierze(swiat, 3, 7, x, y, "Lis") {}
 char Lis::rysowanie() const {
     return 'L';
 }
@@ -40,11 +40,11 @@ void Lis::akcja() {
                 setPozycja(newX, newY);
                 return;
             } else if (cel->getSila() <= getSila()) {
-                swiat->dodajLog("Lis ruszyl na pole (" + to_string(newX) + "," + to_string(newY) + ") gdzie stoi " + typeid(*cel).name());
+                swiat->dodajLog("Lis ruszyl na pole (" + to_string(newX) + "," + to_string(newY) + ") gdzie stoi " + cel->getNazwa());
                 kolizja(cel, oldX, oldY);
                 return;
             } else {
-                swiat->dodajLog("Lis unika silniejszego organizmu " + string(typeid(*cel).name()) + " na (" + to_string(newX) + "," + to_string(newY) + ")");
+                swiat->dodajLog("Lis unika silniejszego organizmu " + string(cel->getNazwa()) + " na (" + to_string(newX) + "," + to_string(newY) + ")");
             }
         }
     }

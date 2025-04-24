@@ -12,12 +12,13 @@ class Organizm {
         int inicjatywa;
         int x, y;
         int wiek = 0;
+        string nazwa;
         Swiat* swiat;
         bool zywy = true;
 
     public:
 
-        Organizm(Swiat* swiat, int sila, int inicjatywa, int x, int y);
+        Organizm(Swiat* swiat, int sila, int inicjatywa, int x, int y, string nazwa);
         virtual ~Organizm();
         
         virtual void akcja() = 0;
@@ -31,6 +32,7 @@ class Organizm {
         int getInicjatywa() const;
         int getX() const;
         int getY() const;
+        string getNazwa() const;
         Swiat* getSwiat() const;
         int getWiek() const;
         bool czyZywy() const;
