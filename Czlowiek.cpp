@@ -1,5 +1,8 @@
 #include "Czlowiek.h"
 #include "Swiat.h"
+#include "Zwierze.h"
+#include "Organizm.h"
+#include "Roslina.h"
 #include <iostream>
 #include <curses.h>
 using namespace std;
@@ -19,6 +22,7 @@ void Czlowiek::akcja() {
     //swiat->dodajLog("Wybierz kierunek ruchu czlowieka (strzałki) lub umiejetnosc - Tarcza Alzura (a):");
     wiekInkrementacja();
     int klawisz = getch();
+    if(klawisz == ERR) return;
     int oldX = getX();
     int oldY = getY();
     int newX;
@@ -85,14 +89,16 @@ void Czlowiek::akcja() {
             }
             break;
         case 'a':
-            if(this->getCooldown() == 0) {
+            if (this->czyTarczaAktywna()) {
+                swiat->dodajLog("Czlowiek probuje uzyc Tarczy Alzura... ale umiejetnosc juz dziala!");
+            } else if (this->getCooldown() > 0) {
+                swiat->dodajLog("Czlowiek probuje uzyc Tarczy Alzura... ale umiejetnosc niedostepna jeszcze przez najblizsze " + to_string(getCooldown()) + " tur!");
+            } else {
                 swiat->dodajLog(typeid(*this).name() + string(" uzywa umiejetnosci Tarcza Alzura"));
                 this->setTarczaAktywna(true);
                 this->setDzialanieTarczy(5);
-            } else {
-                swiat->dodajLog("Czlowiek probuje uzyc Tarczy Alzura... ale umiejetnosc niedostepna jeszcze przez najblizsze " + to_string(getCooldown()) + " tur!");
             }
-            break;
+            break;        
         default:
             break;
     }
@@ -108,6 +114,12 @@ bool Czlowiek::czyOdbilAtak(Organizm* atakujacy) {
 }
 void Czlowiek::kolizja(Organizm* atakujacy, int oldX, int oldY) {
     Swiat* swiat = getSwiat();
+
+    // Jesli kolizja jest z roslina, przekaz jej kontrole nad kolizja
+    if (dynamic_cast<Roslina*>(atakujacy)) {
+        atakujacy->kolizja(this, oldX, oldY);
+        return;
+    }
 
     //Czy tarcza aktualnie dziala - jesli tak, odbij
     if (atakujacy->czyOdbilAtak(this)) {

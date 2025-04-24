@@ -81,7 +81,7 @@ bool Antylopa::czyOdbilAtak(Organizm* atakujacy) {
             Swiat* swiat = getSwiat();
             if (newX >= 0 && newX < swiat->getSzerokosc() && newY >= 0 && newY < swiat->getWysokosc() && swiat->getOrganizmNaPolu(newX, newY) == nullptr) {
                 setPozycja(newX, newY);
-                cout << "Antylopa uciekla przed atakiem!" << endl;
+                swiat->dodajLog(typeid(*this).name() + string(" uciekla przed atakiem na pole (") + to_string(newX) + "," + to_string(newY) + ")");
                 return true;
             }
         }

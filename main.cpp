@@ -23,8 +23,9 @@ using namespace std;
 int main() {
     srand(time(nullptr));  // ziarno do rand()
 
-    const int szerokosc = 20;
+    const int szerokosc = 40;
     const int wysokosc = 20;
+    //const int verticalLogOffset = 2;
 
     Swiat swiat(szerokosc, wysokosc);
     swiat.inicjalizujOkna();
@@ -50,17 +51,43 @@ int main() {
     //swiat.dodajOrganizm(new Lis(&swiat, 5, 5));
     //swiat.dodajOrganizm(new Zolw(&swiat, 5, 4));
     //swiat.dodajOrganizm(new Wilk(&swiat, 4, 5));
-    swiat.dodajOrganizm(new Antylopa(&swiat, 7, 7));
-    swiat.dodajOrganizm(new Wilk(&swiat, 8, 8));
+    //swiat.dodajOrganizm(new Antylopa(&swiat, 7, 7));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 8, 8));
     //swiat.dodajOrganizm(new Owca(&swiat, 3, 3));
     //swiat.dodajOrganizm(new Czlowiek(&swiat, 5, 5));
+    //swiat.dodajOrganizm(new Trawa(&swiat, 5, 5));
+    //swiat.dodajOrganizm(new Mlecz(&swiat, 6, 6));
+    //swiat.dodajOrganizm(new Trawa(&swiat, 7, 7));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 4, 6));
+    //swiat.dodajOrganizm(new Owca(&swiat, 3, 5));
+    //swiat.dodajOrganizm(new Zolw(&swiat, 2, 5));
+    //swiat.dodajOrganizm(new Antylopa(&swiat, 5, 6));
+    //swiat.dodajOrganizm(new Lis(&swiat, 6, 5));
+    //swiat.dodajOrganizm(new Czlowiek(&swiat, 7, 5));
+    //swiat.dodajOrganizm(new Trawa(&swiat, 5, 5));
+    //swiat.dodajOrganizm(new Mlecz(&swiat, 6, 6));
+    //swiat.dodajOrganizm(new Trawa(&swiat, 7, 7));
+    //swiat.dodajOrganizm(new Wilk(&swiat, 5, 4));
+    //swiat.dodajOrganizm(new Antylopa(&swiat, 5, 5));
+    //swiat.dodajOrganizm(new BarszczSosnowskiego(&swiat, 5, 3));
+    //swiat.dodajOrganizm(new BarszczSosnowskiego(&swiat, 3, 5));
+    //swiat.dodajOrganizm(new BarszczSosnowskiego(&swiat, 5, 7));
+    //swiat.dodajOrganizm(new BarszczSosnowskiego(&swiat, 7, 5));
+    //swiat.dodajOrganizm(new Czlowiek(&swiat, 5, 5));
+    swiat.dodajOrganizm(new Wilk(&swiat, 5, 4));
+    swiat.dodajOrganizm(new Wilk(&swiat, 5, 6));
+    swiat.dodajOrganizm(new Wilk(&swiat, 4, 5));
+    swiat.dodajOrganizm(new Wilk(&swiat, 6, 5));
+
     int logOffset = 0;
 
     // Główna pętla symulacji
     while (true) {
         swiat.rysujSwiat();
+        mvprintw(wysokosc + 2, 0, "Kacper Trznadel, 203563");
         mvprintw(wysokosc + 3, 0, "Nacisnij SPACJE, aby przejsc do kolejnej tury (ESC aby wyjsc).");
-        mvprintw(wysokosc + 4, 0, "Logi: (uzyj strzalek do przewijania)");
+        mvprintw(wysokosc + 4, 0, "Uzyj strzalek do poruszania sie czlowiekiem, jesli znajduje sie na planszy.");
+        mvprintw(wysokosc + 5, 0, "Logi: (uzyj 'w' oraz 's' do przewijania)");
         refresh();
 
         int ch = wgetch(swiat.getGameWin());

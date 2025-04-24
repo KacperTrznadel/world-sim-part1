@@ -10,6 +10,12 @@ Swiat::~Swiat() {
     for (Organizm* org : organizmy) {
         delete org;
     }
+    organizmy.clear();
+    for (Organizm* org : noweOrganizmy) {
+        delete org;
+    }
+    noweOrganizmy.clear();
+    logi.clear();
     zakonczOkna();
 }
 void Swiat::inicjalizujOkna() {
@@ -23,7 +29,7 @@ void Swiat::inicjalizujOkna() {
 
     int logHeight = 10;
     int logWidth = widthTerminal - 10;
-    int logStartY = wysokoscPlanszy + 5;
+    int logStartY = wysokoscPlanszy + 7;
 
     gameWin = newwin(wysokoscPlanszy + 2, szerokoscPlanszy + 2, 0, 0);
     logWin = newwin(logHeight, logWidth, logStartY, 0);
@@ -38,8 +44,14 @@ void Swiat::inicjalizujOkna() {
 }
 
 void Swiat::zakonczOkna() {
-    if (gameWin) delwin(gameWin);
-    if (logWin) delwin(logWin);
+    if (gameWin) {
+        delwin(gameWin);
+        gameWin = nullptr;
+    }
+    if (logWin) {
+        delwin(logWin);
+        logWin = nullptr;
+    }
     endwin();
 }
 void Swiat::rysujSwiat() const {
@@ -56,6 +68,9 @@ void Swiat::dodajLog(string tekst) {
     logi.push_back(tekst);
 }
 void Swiat::wypiszLogi(int offset) const {
+    if(logi.empty()) {
+        return;
+    }
     werase(logWin);
     box(logWin, 0, 0);
 
@@ -74,6 +89,7 @@ void Swiat::dodajOrganizm(Organizm* nowy) {
         noweOrganizmy.push_back(nowy);
     } else {
         delete nowy;
+        nowy = nullptr;
     }
 }
 void Swiat::wykonajWszystkieAkcje() {
@@ -86,6 +102,9 @@ void Swiat::wykonajWszystkieAkcje() {
 void Swiat::usunWszystkieMartwe() {
     for (int i = 0; i < organizmy.size(); i++) {
         if (!organizmy[i]->czyZywy()) {
+            //cout << "Usuwam martwego: " << organizmy[i]->getNazwa() << endl;
+            //Swiat* swiat = organizmy[i]->getSwiat();
+            //swiat->dodajLog(typeid(*organizmy[i]).name() + string(": usuwam martwego organizm na polu (") + to_string(organizmy[i]->getX()) + "," + to_string(organizmy[i]->getY()) + ")");
             delete organizmy[i];
             organizmy.erase(organizmy.begin() + i);
             i--;

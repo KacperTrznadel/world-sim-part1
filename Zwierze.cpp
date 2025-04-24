@@ -1,4 +1,6 @@
 #include "Zwierze.h"
+#include "Organizm.h"
+#include "Roslina.h"
 #include "Swiat.h"
 #include <cstdlib>
 #include <iostream>
@@ -26,7 +28,7 @@ void Zwierze::akcja() {
 
     for (int i = 0; i < 4; ++i) {
         int k = kierunki[i];
-        
+
         int newX = getX() + dx[k];
         int newY = getY() + dy[k];
 
@@ -51,6 +53,13 @@ void Zwierze::akcja() {
 void Zwierze::kolizja(Organizm* inny, int oldX, int oldY) {
 
     Swiat* swiat = getSwiat();
+
+    // Jesli kolizja jest z roslina, przekaz jej kontrole nad kolizja
+    if (dynamic_cast<Roslina*>(inny)) {
+        inny->kolizja(this, oldX, oldY);
+        return;
+    }
+
     if (typeid(*this) == typeid(*inny)) {
 
         int dx[] = { 0, 1, 0, -1 };
