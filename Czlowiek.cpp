@@ -120,9 +120,13 @@ void Czlowiek::kolizja(Organizm* atakujacy, int oldX, int oldY) {
         atakujacy->kolizja(this, oldX, oldY);
         return;
     }
+    
+    if(atakujacy->czyOdbilAtak(this)) {
+        return;
+    }
 
     //Czy tarcza aktualnie dziala - jesli tak, odbij
-    if (atakujacy->czyOdbilAtak(this)) {
+    if (this->czyTarczaAktywna()) {
         int dx[] = { 0, 1, 0, -1 };
         int dy[] = { -1, 0, 1, 0 };
 
