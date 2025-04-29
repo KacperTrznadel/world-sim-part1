@@ -133,7 +133,7 @@ int main() {
             swiat.dodajLog("Stan gry zapisany do pliku.");
         } else if (ch == 'l') {
             swiat.wczytajZPliku("stan_swiata.txt");
-            swiat.dodajLog("Stan gry wczytany z pliku.");
+            //swiat.dodajLog("Stan gry wczytany z pliku.");
         }
     }
 
