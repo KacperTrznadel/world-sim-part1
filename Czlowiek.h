@@ -16,12 +16,12 @@ class Czlowiek : public Zwierze {
         virtual void akcja() override;
         virtual void kolizja(Organizm* atakujacy, int oldX, int oldY) override;
         virtual bool czyOdbilAtak(Organizm* atakujacy) override;
-        bool czyTarczaAktywna() const;
-        void setTarczaAktywna(bool aktywna);
-        void setCooldown(int cooldown);
-        int getCooldown() const;
-        int getDzialanieTarczy() const;
-        void setDzialanieTarczy(int dzialanie);
+        bool czyTarczaAktywna() const { return tarczaAktywna; }
+        void setTarczaAktywna(bool aktywna) { tarczaAktywna = aktywna; }
+        void setCooldown(int cooldown) { this->cooldown = cooldown; }
+        int getCooldown() const { return cooldown; }
+        int getDzialanieTarczy() const { return dzialanieTarczy; }
+        void setDzialanieTarczy(int dzialanie) { this->dzialanieTarczy = dzialanie; }
         virtual char rysowanie() const override;
         virtual Organizm* klonuj(Swiat* swiat, int x, int y) const override;
 };

@@ -23,7 +23,7 @@ class Organizm {
         
         virtual void akcja() = 0;
         virtual void kolizja(Organizm* inny, int oldX, int oldY) = 0;
-        virtual bool czyOdbilAtak(Organizm* atakujacy);
+        virtual bool czyOdbilAtak(Organizm* atakujacy) { return false; }
         virtual char rysowanie() const = 0;
         virtual Organizm* klonuj(Swiat* swiat, int x, int y) const = 0;
 
@@ -40,7 +40,7 @@ class Organizm {
         void setSila(int sila);
         void setPozycja(int newX, int newY);
         void wiekInkrementacja();
-        void setWiek(int wiek);
+        void setWiek(int wiek) { this->wiek = wiek; }
         void zabij();
 
 };

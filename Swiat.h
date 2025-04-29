@@ -43,9 +43,9 @@ class Swiat {
         Organizm* getOrganizmNaPolu(int x, int y) const;
         int getSzerokosc() const;
         int getWysokosc() const;
-        WINDOW* getGameWin() const;
-        WINDOW* getLogWin() const;
-        vector<string> getLogi() const;
+        WINDOW* getGameWin() const { return gameWin; }
+        WINDOW* getLogWin() const { return logWin; }
+        vector<string> getLogi() const { return logi; }
 };
 
 #endif

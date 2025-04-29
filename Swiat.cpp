@@ -206,21 +206,14 @@ void Swiat::wczytajZPliku(string nazwaPliku) {
         return;
     }
 
-    // Wczytaj wymiary świata
-    int saveSzerokoscPlanszy, saveWysokoscPlanszy;
-    plik >> saveSzerokoscPlanszy >> saveWysokoscPlanszy;
-
-    if (saveSzerokoscPlanszy != szerokoscPlanszy || saveWysokoscPlanszy != wysokoscPlanszy) {
-        dodajLog("Wymiary swiata w pliku nie zgadzaja sie z aktualnymi wymiarami swiata.");
-        plik.close();
-        return;
-    }
-
     // Usuń istniejące organizmy
     for (Organizm* org : organizmy) {
         delete org;
     }
     organizmy.clear();
+
+    // Wczytaj wymiary świata
+    plik >> szerokoscPlanszy >> wysokoscPlanszy;
 
     // Wczytaj organizmy
     string typ;
@@ -261,16 +254,5 @@ void Swiat::wczytajZPliku(string nazwaPliku) {
         }
     }
 
-    dodajLog("Stan swiata wczytany z pliku.");
     plik.close();
-}
-
-WINDOW* Swiat::getGameWin() const {
-    return gameWin;
-}
-WINDOW* Swiat::getLogWin() const {
-    return logWin;
-}
-vector<string> Swiat::getLogi() const {
-    return logi;
 }
