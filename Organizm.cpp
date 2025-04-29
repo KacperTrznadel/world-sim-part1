@@ -6,6 +6,10 @@ using namespace std;
 Organizm::Organizm(Swiat* swiat, int sila, int inicjatywa, int x, int y, string nazwa)
     : swiat(swiat), sila(sila), inicjatywa(inicjatywa), x(x), y(y), nazwa(nazwa) {}
 Organizm::~Organizm() {}
+
+bool Organizm::czyOdbilAtak(Organizm* atakujacy) {
+    return false;
+}
 int Organizm::getSila() const {
     return sila;
 }
@@ -36,6 +40,9 @@ void Organizm::setSila(int sila) {
 void Organizm::setPozycja(int newX, int newY) {
     x = newX;
     y = newY;
+}
+void Organizm::setWiek(int wiek) {
+    this->wiek = wiek;
 }
 void Organizm::wiekInkrementacja() {
     wiek++;

@@ -256,3 +256,13 @@ void Swiat::wczytajZPliku(string nazwaPliku) {
 
     plik.close();
 }
+
+WINDOW* Swiat::getGameWin() const {
+    return gameWin;
+}
+WINDOW* Swiat::getLogWin() const {
+    return logWin;
+}
+vector<string> Swiat::getLogi() const {
+    return logi;
+}

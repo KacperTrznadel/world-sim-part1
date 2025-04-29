@@ -16,6 +16,25 @@ Organizm* Czlowiek::klonuj(Swiat* swiat, int x, int y) const {
     return new Czlowiek(swiat, x, y);
 }
 
+bool Czlowiek::czyTarczaAktywna() const {
+    return tarczaAktywna;
+}
+void Czlowiek::setTarczaAktywna(bool aktywna) {
+    this->tarczaAktywna = aktywna;
+}
+int Czlowiek::getDzialanieTarczy() const {
+    return dzialanieTarczy;
+}
+void Czlowiek::setDzialanieTarczy(int dzialanie) {
+    this->dzialanieTarczy = dzialanie;
+}
+int Czlowiek::getCooldown() const {
+    return cooldown;
+}
+void Czlowiek::setCooldown(int cooldown) {
+    this->cooldown = cooldown;
+}
+
 void Czlowiek::akcja() {
 
     Swiat* swiat = getSwiat();
