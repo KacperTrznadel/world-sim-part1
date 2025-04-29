@@ -86,22 +86,22 @@ int main() {
     swiat.dodajOrganizm(new Czlowiek(&swiat, 20, 10));
 
     // Zwierzęta
-    // swiat.dodajOrganizm(new Wilk(&swiat, 2, 2));
-    //swiat.dodajOrganizm(new Owca(&swiat, 37, 2));
-    //swiat.dodajOrganizm(new Lis(&swiat, 2, 17));
-    // swiat.dodajOrganizm(new Zolw(&swiat, 37, 17));
-    // swiat.dodajOrganizm(new Antylopa(&swiat, 10, 5));
+    swiat.dodajOrganizm(new Wilk(&swiat, 2, 2));
+    swiat.dodajOrganizm(new Owca(&swiat, 37, 2));
+    swiat.dodajOrganizm(new Lis(&swiat, 2, 17));
+    swiat.dodajOrganizm(new Zolw(&swiat, 37, 17));
+    swiat.dodajOrganizm(new Antylopa(&swiat, 10, 5));
 
     // Rośliny
-    // swiat.dodajOrganizm(new Trawa(&swiat, 5, 10));
-    // swiat.dodajOrganizm(new Trawa(&swiat, 15, 15));
-    // swiat.dodajOrganizm(new Guarana(&swiat, 25, 7));
-    // swiat.dodajOrganizm(new Guarana(&swiat, 8, 18));
-    // swiat.dodajOrganizm(new Mlecz(&swiat, 33, 10));
-    // swiat.dodajOrganizm(new WilczeJagody(&swiat, 12, 3));
-    // swiat.dodajOrganizm(new WilczeJagody(&swiat, 36, 14));
-    // swiat.dodajOrganizm(new BarszczSosnowskiego(&swiat, 20, 2));
-    // swiat.dodajOrganizm(new BarszczSosnowskiego(&swiat, 20, 17));
+    swiat.dodajOrganizm(new Trawa(&swiat, 5, 10));
+    swiat.dodajOrganizm(new Trawa(&swiat, 15, 15));
+    swiat.dodajOrganizm(new Guarana(&swiat, 25, 7));
+    swiat.dodajOrganizm(new Guarana(&swiat, 8, 18));
+    swiat.dodajOrganizm(new Mlecz(&swiat, 33, 10));
+    swiat.dodajOrganizm(new WilczeJagody(&swiat, 12, 3));
+    swiat.dodajOrganizm(new WilczeJagody(&swiat, 36, 14));
+    swiat.dodajOrganizm(new BarszczSosnowskiego(&swiat, 20, 2));
+    swiat.dodajOrganizm(new BarszczSosnowskiego(&swiat, 20, 17));
 
     int logOffset = 0;
 
